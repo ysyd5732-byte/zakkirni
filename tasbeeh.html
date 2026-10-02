@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>التسبيح الإلكتروني | ذَكِّرني</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;800&display=swap"
+      rel="stylesheet">
+
+</head>
+
+<body>
+
+<header class="header">
+
+<div class="container nav">
+
+<a class="logo" href="index.html">
+    <span class="logo-mark">☪</span>
+    <span>
+        ذَكِّرني
+        <small>لِلذِّكر والقرآن</small>
+    </span>
+</a>
+
+<button class="menu-btn"
+        id="menuBtn">
+    ☰
+</button>
+
+<nav class="nav-links"
+     id="navLinks">
+
+<a href="index.html">الرئيسية</a>
+<a href="quran.html">📖 القرآن</a>
+<a href="adhkar.html">🤲 الأذكار</a>
+<a href="sunnah.html">🕌 السنن</a>
+<a href="tasbeeh.html" class="active">📿 التسبيح</a>
+<a href="prophets.html">📚 الأنبياء</a>
+
+</nav>
+
+</div>
+
+</header>
+
+
+<section class="page-hero">
+
+<div class="container">
+
+<span class="badge">
+    📿 التسبيح الإلكتروني
+</span>
+
+<h1>
+    سبّح الله
+</h1>
+
+<p>
+    العدد بيتحفظ عندك تلقائيًا
+</p>
+
+</div>
+
+</section>
+
+
+<section class="tasbeeh-page">
+
+<div class="container">
+
+
+<div class="tasbeeh-selector">
+
+<button onclick="selectDhikr('سُبْحَانَ اللَّهِ')">
+    سُبْحَانَ اللَّهِ
+</button>
+
+<button onclick="selectDhikr('الْحَمْدُ لِلَّهِ')">
+    الْحَمْدُ لِلَّهِ
+</button>
+
+<button onclick="selectDhikr('اللَّهُ أَكْبَرُ')">
+    اللَّهُ أَكْبَرُ
+</button>
+
+<button onclick="selectDhikr('أَسْتَغْفِرُ اللَّهَ')">
+    أَسْتَغْفِرُ اللَّهَ
+</button>
+
+</div>
+
+
+<div class="tasbeeh-box">
+
+<div class="selected-dhikr"
+     id="selectedDhikr">
+    سُبْحَانَ اللَّهِ
+</div>
+
+
+<div class="tasbeeh-count"
+     id="tasbeehCount">
+    ٠
+</div>
+
+
+<button class="tasbeeh-button"
+        id="tasbeehButton">
+
+    📿
+
+    <span>
+        اضغط للتسبيح
+    </span>
+
+</button>
+
+
+<div class="tasbeeh-actions">
+
+<button class="reset-btn"
+        onclick="resetTasbeeh()">
+    🔄 تصفير
+</button>
+
+<button class="save-btn"
+        onclick="saveTasbeeh()">
+    💾 حفظ العدد
+</button>
+
+</div>
+
+
+<div class="saved-message"
+     id="savedMessage">
+</div>
+
+</div>
+
+
+<div class="tasbeeh-stats">
+
+<div class="stat-card">
+
+<span>📿</span>
+
+<strong id="todayCount">
+    ٠
+</strong>
+
+<small>
+    تسبيحات اليوم
+</small>
+
+</div>
+
+
+<div class="stat-card">
+
+<span>💾</span>
+
+<strong id="savedCount">
+    ٠
+</strong>
+
+<small>
+    المحفوظ
+</small>
+
+</div>
+
+
+<div class="stat-card">
+
+<span>✨</span>
+
+<strong id="totalCount">
+    ٠
+</strong>
+
+<small>
+    الإجمالي
+</small>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<script src="tasbeeh.js"></script>
+
+</body>
+
+</html>

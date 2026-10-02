@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>القرآن الكريم | ذَكِّرني</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="preconnect"
+      href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;800&display=swap"
+      rel="stylesheet">
+
+</head>
+
+<body>
+
+<header class="header">
+
+<div class="container nav">
+
+<a class="logo" href="index.html">
+    <span class="logo-mark">☪</span>
+    <span>
+        ذَكِّرني
+        <small>لِلذِّكر والقرآن</small>
+    </span>
+</a>
+
+<button class="menu-btn"
+        id="menuBtn">
+    ☰
+</button>
+
+<nav class="nav-links"
+     id="navLinks">
+
+<a href="index.html">الرئيسية</a>
+<a href="quran.html" class="active">📖 القرآن</a>
+<a href="adhkar.html">🤲 الأذكار</a>
+<a href="sunnah.html">🕌 السنن</a>
+<a href="tasbeeh.html">📿 التسبيح</a>
+<a href="prophets.html">📚 الأنبياء</a>
+
+</nav>
+
+</div>
+
+</header>
+
+
+<section class="page-hero">
+
+<div class="container">
+
+<span class="badge">
+    📖 كلام الله
+</span>
+
+<h1>
+    القرآن الكريم
+</h1>
+
+<p>
+    اختار السورة وابدأ القراءة
+</p>
+
+</div>
+
+</section>
+
+
+<section class="page-content">
+
+<div class="container">
+
+<div class="quran-controls">
+
+<select id="surahSelect"
+        class="surah-select">
+
+<option>
+    جاري تحميل السور...
+</option>
+
+</select>
+
+</div>
+
+
+<div id="quranReader"
+     class="quran-reader">
+
+<h2 class="quran-title">
+    القرآن الكريم
+</h2>
+
+<p style="text-align:center">
+    جاري تحميل السورة...
+</p>
+
+</div>
+
+
+<div class="quran-navigation">
+
+<button id="prevSurah">
+    ← السورة السابقة
+</button>
+
+<button id="nextSurah">
+    السورة التالية →
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<script src="quran.js"></script>
+
+</body>
+
+</html>

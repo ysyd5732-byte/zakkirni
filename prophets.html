@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>قصص الأنبياء | ذَكِّرني</title>
+
+    <meta
+        name="description"
+        content="قصص الأنبياء والمرسلين كما وردت في القرآن الكريم"
+    >
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+
+    <div class="container nav">
+
+        <a href="index.html" class="logo">
+
+            <span class="logo-mark">☪</span>
+
+            <span>
+                ذَكِّرني
+                <small>لِلذِّكر والقرآن</small>
+            </span>
+
+        </a>
+
+        <button
+            class="menu-btn"
+            id="menuBtn"
+            type="button"
+        >
+            ☰
+        </button>
+
+        <nav
+            class="nav-links"
+            id="navLinks"
+        >
+
+            <a href="index.html">
+                الرئيسية
+            </a>
+
+            <a href="quran.html">
+                📖 القرآن
+            </a>
+
+            <a href="adhkar.html">
+                🤲 الأذكار
+            </a>
+
+            <a href="sunnah.html">
+                🕌 السنن
+            </a>
+
+            <a href="tasbeeh.html">
+                📿 التسبيح
+            </a>
+
+            <a
+                href="prophets.html"
+                class="active"
+            >
+                📚 الأنبياء
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<main>
+
+    <!-- مقدمة الصفحة -->
+
+    <section class="page-hero">
+
+        <div class="container page-content">
+
+            <div class="section-icon">
+                📚
+            </div>
+
+            <span>
+                قصص من القرآن الكريم
+            </span>
+
+            <h1>
+                قصص الأنبياء
+            </h1>
+
+            <p>
+                تعرّف على الأنبياء الذين ذكرهم
+                الله تعالى في القرآن الكريم،
+                واقرأ ما ورد عنهم من أحداث
+                ومواقف وعِبر.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- قائمة الأنبياء -->
+
+    <section class="section">
+
+        <div class="container">
+
+            <div class="title-center">
+
+                <span>
+                    🌿 أنبياء الله
+                </span>
+
+                <h2>
+                    اختر نبيًا لقراءة قصته
+                </h2>
+
+                <p>
+                    اضغط على أي بطاقة لفتح القصة
+                </p>
+
+            </div>
+
+
+            <div
+                id="prophetsGrid"
+                class="prophets-grid"
+            >
+
+                <div class="loading">
+                    ⏳ جاري تحميل القصص...
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- قارئ القصة -->
+
+    <section
+        id="storyReader"
+        class="story-reader"
+    >
+
+        <div class="container">
+
+            <div class="story-header">
+
+                <div
+                    id="storyHeaderIcon"
+                    class="story-header-icon"
+                >
+                    📖
+                </div>
+
+                <div>
+
+                    <span>
+                        قصة نبي من أنبياء الله
+                    </span>
+
+                    <h2 id="storyTitle">
+                        اختر نبيًا
+                    </h2>
+
+                </div>
+
+                <button
+                    id="closeStory"
+                    class="close-story"
+                    type="button"
+                    aria-label="إغلاق القصة"
+                >
+                    ✕
+                </button>
+
+            </div>
+
+
+            <div
+                id="storyContent"
+                class="story-content"
+            >
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer class="footer">
+
+    <div class="container footer-grid">
+
+        <div>
+
+            <div class="footer-logo">
+                ☪ ذَكِّرني
+            </div>
+
+            <p>
+                موقع إسلامي للقرآن والذكر والتذكير.
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <h3>
+                الأقسام
+            </h3>
+
+            <a href="quran.html">
+                القرآن
+            </a>
+
+            <a href="adhkar.html">
+                الأذكار
+            </a>
+
+            <a href="sunnah.html">
+                السنن
+            </a>
+
+        </div>
+
+
+        <div>
+
+            <h3>
+                المزيد
+            </h3>
+
+            <a href="tasbeeh.html">
+                التسبيح
+            </a>
+
+            <a href="prophets.html">
+                قصص الأنبياء
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+        © 2026 ذَكِّرني
+    </div>
+
+</footer>
+
+
+<script src="prophets.js"></script>
+
+</body>
+</html>
