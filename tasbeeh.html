@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>التسبيح | ذَكِّرني</title>
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          href="style.css">
+
+    <style>
+        /* =========================================
+           تنسيق خاص بصفحة التسبيح
+        ========================================= */
+
+        .tasbeeh-page {
+            min-height: 100vh;
+        }
+
+        .tasbeeh-page-content {
+            width: min(900px, calc(100% - 30px));
+            margin: 0 auto;
+            padding: 35px 0 80px;
+        }
+
+        .tasbeeh-page .tasbeeh-wrapper {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        /* اختيار الذكر */
+
+        .tasbeeh-page .tasbeeh-card {
+            width: 100%;
+            padding: 25px;
+            background: #102c24;
+            border: 1px solid rgba(217, 180, 91, 0.2);
+            border-radius: 22px;
+            box-sizing: border-box;
+        }
+
+        .tasbeeh-page .tasbeeh-card h2 {
+            margin: 0 0 20px;
+            text-align: center;
+            color: #f0d78c;
+            font-size: 22px;
+        }
+
+        .tasbeeh-page .dhikr-options {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .tasbeeh-page .dhikr-option {
+            width: 100%;
+            min-height: 52px;
+            border: 1px solid rgba(217, 180, 91, 0.2);
+            border-radius: 14px;
+            background: #0b241d;
+            color: #c9d4ce;
+            font-family: "Cairo", sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .tasbeeh-page .dhikr-option:hover {
+            border-color: #d9b45b;
+            color: #f0d78c;
+        }
+
+        .tasbeeh-page .dhikr-option.active {
+            background: rgba(217, 180, 91, 0.15);
+            border-color: #d9b45b;
+            color: #f0d78c;
+        }
+
+        /* العداد */
+
+        .tasbeeh-page .tasbeeh-counter-card {
+            width: 100%;
+            padding: 35px 20px 30px;
+            box-sizing: border-box;
+            text-align: center;
+
+            background:
+                radial-gradient(
+                    circle at center top,
+                    rgba(29, 138, 99, 0.18),
+                    transparent 55%
+                ),
+                #102c24;
+
+            border: 1px solid rgba(217, 180, 91, 0.2);
+            border-radius: 28px;
+        }
+
+        .tasbeeh-page .current-dhikr {
+            color: #f0d78c;
+            font-family: "Amiri", serif;
+            font-size: 32px;
+            margin-bottom: 5px;
+        }
+
+        .tasbeeh-page .tasbeeh-count {
+            color: #fff;
+            font-family: "Cairo", sans-serif;
+            font-size: clamp(55px, 10vw, 90px);
+            line-height: 1.2;
+            font-weight: 800;
+            margin: 5px 0 20px;
+        }
+
+        /* زر التسبيح */
+
+        .tasbeeh-page .tasbeeh-main-button {
+            width: 210px;
+            height: 210px;
+            margin: 0 auto 25px;
+
+            border: 8px solid rgba(217, 180, 91, 0.14);
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle at 35% 30%,
+                    #2a9d73,
+                    #126447 65%,
+                    #0b402f
+                );
+
+            color: white;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 20px 45px rgba(0, 0, 0, 0.35),
+                inset 0 2px 10px rgba(255,255,255,0.08);
+
+            transition:
+                transform 0.12s ease,
+                box-shadow 0.12s ease;
+        }
+
+        .tasbeeh-page .tasbeeh-main-button:hover {
+            transform: scale(1.03);
+        }
+
+        .tasbeeh-page .tasbeeh-main-button:active {
+            transform: scale(0.93);
+        }
+
+        .tasbeeh-page .tasbeeh-main-button span {
+            font-size: 42px;
+            line-height: 1;
+        }
+
+        .tasbeeh-page .tasbeeh-main-button strong {
+            font-family: "Cairo", sans-serif;
+            font-size: 25px;
+        }
+
+        .tasbeeh-page .tasbeeh-main-button small {
+            font-family: "Cairo", sans-serif;
+            color: rgba(255,255,255,0.7);
+            font-size: 12px;
+        }
+
+        .tasbeeh-page .tasbeeh-main-button.tasbeeh-click {
+            animation: tasbeehPulse 0.16s ease;
+        }
+
+        @keyframes tasbeehPulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(0.91);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* الأزرار */
+
+        .tasbeeh-page .tasbeeh-actions {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .tasbeeh-page .save-btn,
+        .tasbeeh-page .reset-btn {
+            min-width: 130px;
+            min-height: 45px;
+            padding: 8px 18px;
+            border-radius: 13px;
+            font-family: "Cairo", sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .tasbeeh-page .save-btn {
+            border: 1px solid rgba(54, 183, 132, 0.35);
+            background: rgba(54, 183, 132, 0.08);
+            color: #65d2a5;
+        }
+
+        .tasbeeh-page .reset-btn {
+            border: 1px solid rgba(217, 180, 91, 0.25);
+            background: rgba(217, 180, 91, 0.07);
+            color: #f0d78c;
+        }
+
+        /* الإحصائيات */
+
+        .tasbeeh-page .stats-grid {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+
+        .tasbeeh-page .stat-box {
+            padding: 18px 10px;
+            text-align: center;
+            background: rgba(255,255,255,0.025);
+            border: 1px solid rgba(217, 180, 91, 0.12);
+            border-radius: 16px;
+        }
+
+        .tasbeeh-page .stat-box span {
+            display: block;
+            color: #91a69d;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+
+        .tasbeeh-page .stat-box strong {
+            display: block;
+            color: #f0d78c;
+            font-size: 18px;
+        }
+
+        /* الملاحظة */
+
+        .tasbeeh-page .tasbeeh-note {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 20px;
+            box-sizing: border-box;
+
+            background: rgba(29, 138, 99, 0.07);
+            border: 1px solid rgba(54, 183, 132, 0.16);
+            border-radius: 16px;
+        }
+
+        .tasbeeh-page .tasbeeh-note span {
+            font-size: 22px;
+        }
+
+        .tasbeeh-page .tasbeeh-note p {
+            margin: 0;
+            color: #c9d4ce;
+            font-size: 13px;
+        }
+
+        /* موبايل */
+
+        @media (max-width: 700px) {
+
+            .tasbeeh-page-content {
+                width: calc(100% - 20px);
+                padding-top: 25px;
+            }
+
+            .tasbeeh-page .dhikr-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .tasbeeh-page .tasbeeh-main-button {
+                width: 180px;
+                height: 180px;
+            }
+
+            .tasbeeh-page .tasbeeh-main-button span {
+                font-size: 36px;
+            }
+
+            .tasbeeh-page .tasbeeh-main-button strong {
+                font-size: 22px;
+            }
+
+            .tasbeeh-page .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 450px) {
+
+            .tasbeeh-page .tasbeeh-card {
+                padding: 20px 12px;
+            }
+
+            .tasbeeh-page .tasbeeh-counter-card {
+                padding: 28px 12px;
+            }
+
+            .tasbeeh-page .current-dhikr {
+                font-size: 27px;
+            }
+
+            .tasbeeh-page .tasbeeh-count {
+                font-size: 62px;
+            }
+
+            .tasbeeh-page .tasbeeh-main-button {
+                width: 165px;
+                height: 165px;
+            }
+
+            .tasbeeh-page .tasbeeh-actions {
+                flex-direction: column;
+            }
+
+            .tasbeeh-page .save-btn,
+            .tasbeeh-page .reset-btn {
+                width: 100%;
+            }
+
+            .tasbeeh-page .tasbeeh-note {
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body class="tasbeeh-page">
+
+<header class="header">
+
+    <div class="container nav">
+
+        <a href="index.html" class="logo">
+            <span class="logo-mark">☪</span>
+
+            <span>
+                ذَكِّرني
+                <small>لِلذِّكر والقرآن</small>
+            </span>
+        </a>
+
+        <button
+            class="menu-btn"
+            id="menuBtn"
+            type="button">
+            ☰
+        </button>
+
+        <nav
+            class="nav-links"
+            id="navLinks">
+
+            <a href="index.html">
+                الرئيسية
+            </a>
+
+            <a href="quran.html">
+                📖 القرآن
+            </a>
+
+            <a href="adhkar.html">
+                🤲 الأذكار
+            </a>
+
+            <a href="sunnah.html">
+                🕌 السنن
+            </a>
+
+            <a href="tasbeeh.html" class="active">
+                📿 التسبيح
+            </a>
+
+            <a href="prophets.html">
+                📚 الأنبياء
+            </a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+
+<section class="page-hero">
+
+    <div class="container">
+
+        <span class="badge">
+            📿 ذكر الله
+        </span>
+
+        <h1>
+            التسبيح الإلكتروني
+        </h1>
+
+        <p>
+            اختار الذكر وابدأ التسبيح
+        </p>
+
+    </div>
+
+</section>
+
+
+<main class="tasbeeh-page-content">
+
+    <div class="tasbeeh-wrapper">
+
+
+        <!-- اختيار الذكر -->
+
+        <div class="tasbeeh-card">
+
+            <h2>
+                اختر الذكر
+            </h2>
+
+            <div class="dhikr-options">
+
+                <button
+                    class="dhikr-option active"
+                    data-dhikr="سبحان الله"
+                    type="button">
+
+                    سبحان الله
+
+                </button>
+
+                <button
+                    class="dhikr-option"
+                    data-dhikr="الحمد لله"
+                    type="button">
+
+                    الحمد لله
+
+                </button>
+
+                <button
+                    class="dhikr-option"
+                    data-dhikr="الله أكبر"
+                    type="button">
+
+                    الله أكبر
+
+                </button>
+
+                <button
+                    class="dhikr-option"
+                    data-dhikr="أستغفر الله"
+                    type="button">
+
+                    أستغفر الله
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- العداد -->
+
+        <div class="tasbeeh-counter-card">
+
+            <div
+                class="current-dhikr"
+                id="currentDhikr">
+
+                سبحان الله
+
+            </div>
+
+            <div
+                class="tasbeeh-count"
+                id="tasbeehCount">
+
+                0
+
+            </div>
+
+            <button
+                class="tasbeeh-main-button"
+                id="tasbeehButton"
+                type="button">
+
+                <span>📿</span>
+
+                <strong>
+                    سبّح
+                </strong>
+
+                <small>
+                    اضغط هنا
+                </small>
+
+            </button>
+
+            <div class="tasbeeh-actions">
+
+                <button
+                    class="save-btn"
+                    id="saveBtn"
+                    type="button">
+
+                    💾 حفظ
+
+                </button>
+
+                <button
+                    class="reset-btn"
+                    id="resetBtn"
+                    type="button">
+
+                    🔄 تصفير
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- الإحصائيات -->
+
+        <div class="tasbeeh-card stats-card">
+
+            <h2>
+                إحصائياتك
+            </h2>
+
+            <div class="stats-grid">
+
+                <div class="stat-box">
+
+                    <span>
+                        الذكر الحالي
+                    </span>
+
+                    <strong id="statDhikr">
+                        سبحان الله
+                    </strong>
+
+                </div>
+
+                <div class="stat-box">
+
+                    <span>
+                        العدد الحالي
+                    </span>
+
+                    <strong id="statCount">
+                        0
+                    </strong>
+
+                </div>
+
+                <div class="stat-box">
+
+                    <span>
+                        إجمالي التسبيحات
+                    </span>
+
+                    <strong id="totalCount">
+                        0
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- الملاحظة -->
+
+        <div class="tasbeeh-note">
+
+            <span>💚</span>
+
+            <p>
+                يتم حفظ عدد التسبيحات تلقائيًا
+                على جهازك حتى لا يضيع العدد.
+            </p>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<footer class="footer">
+
+    <div class="container">
+
+        <div class="footer-logo">
+            ☪ ذَكِّرني
+        </div>
+
+        <p>
+            موقع إسلامي للقرآن والذكر والتذكير.
+        </p>
+
+    </div>
+
+    <div class="footer-bottom">
+        © 2026 ذَكِّرني
+    </div>
+
+</footer>
+
+
+<script src="tasbeeh.js"></script>
+
+</body>
+
+</html>
