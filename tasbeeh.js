@@ -1,58 +1,73 @@
-/* =========================================
-   ذَكِّرني - التسبيح الإلكتروني
-========================================= */
+// ========================================
+// ذَكِّرني - التسبيح الإلكتروني
+// ========================================
 
 
-/* العداد الحالي */
-let count = 0;
+// العناصر
+const tasbeehButton =
+    document.getElementById("tasbeehButton");
 
+const resetButton =
+    document.getElementById("resetBtn");
 
-/* الذكر المختار */
-let selectedDhikr =
-    "سُبْحَانَ اللَّهِ";
-
-
-/* عناصر الصفحة */
+const saveButton =
+    document.getElementById("saveBtn");
 
 const countElement =
-    document.getElementById(
-        "tasbeehCount"
-    );
+    document.getElementById("tasbeehCount");
 
-const selectedElement =
-    document.getElementById(
-        "selectedDhikr"
-    );
+const currentDhikrElement =
+    document.getElementById("currentDhikr");
 
-const todayElement =
-    document.getElementById(
-        "todayCount"
-    );
+const statDhikrElement =
+    document.getElementById("statDhikr");
 
-const savedElement =
-    document.getElementById(
-        "savedCount"
-    );
+const statCountElement =
+    document.getElementById("statCount");
 
-const totalElement =
-    document.getElementById(
-        "totalCount"
-    );
+const totalCountElement =
+    document.getElementById("totalCount");
 
-const savedMessage =
-    document.getElementById(
-        "savedMessage"
-    );
-
-const tasbeehButton =
-    document.getElementById(
-        "tasbeehButton"
-    );
+const dhikrOptions =
+    document.querySelectorAll(".dhikr-option");
 
 
-/* =========================================
-   تحويل الأرقام
-========================================= */
+// ========================================
+// البيانات
+// ========================================
+
+const STORAGE_KEY =
+    "zakkirni_tasbeeh_data";
+
+
+// ========================================
+// البيانات الافتراضية
+// ========================================
+
+let tasbeehData = {
+
+    currentDhikr: "سبحان الله",
+
+    counts: {
+
+        "سبحان الله": 0,
+
+        "الحمد لله": 0,
+
+        "الله أكبر": 0,
+
+        "أستغفر الله": 0
+
+    },
+
+    total: 0
+
+};
+
+
+// ========================================
+// تحويل الأرقام للعربي
+// ========================================
 
 function arabicNumbers(number) {
 
@@ -64,87 +79,123 @@ function arabicNumbers(number) {
 }
 
 
-/* =========================================
-   صوت التسبيح
-========================================= */
+// ========================================
+// تحميل البيانات
+// ========================================
 
-function playTasbeehSound() {
+function loadData() {
 
     try {
 
-        const AudioContext =
-            window.AudioContext ||
-            window.webkitAudioContext;
+        const savedData =
+            localStorage.getItem(
+                STORAGE_KEY
+            );
 
-        if (!AudioContext) {
+        if (!savedData) {
+
+            updateUI();
+
             return;
+
         }
 
 
-        const audio =
-            new AudioContext();
+        const parsedData =
+            JSON.parse(savedData);
 
 
-        const oscillator =
-            audio.createOscillator();
-
-        const gain =
-            audio.createGain();
-
-
-        oscillator.type = "sine";
-
-        oscillator.frequency.setValueAtTime(
-            650,
-            audio.currentTime
-        );
-
-
-        gain.gain.setValueAtTime(
-            0.08,
-            audio.currentTime
-        );
-
-
-        gain.gain.exponentialRampToValueAtTime(
-            0.001,
-            audio.currentTime + 0.09
-        );
-
-
-        oscillator.connect(gain);
-
-        gain.connect(
-            audio.destination
-        );
-
-
-        oscillator.start();
-
-        oscillator.stop(
-            audio.currentTime + 0.09
-        );
-
-
-        setTimeout(() => {
+        if (
+            parsedData &&
+            typeof parsedData === "object"
+        ) {
 
             if (
-                audio &&
-                audio.state !== "closed"
+                typeof parsedData.currentDhikr ===
+                "string"
             ) {
 
-                audio.close();
+                tasbeehData.currentDhikr =
+                    parsedData.currentDhikr;
 
             }
 
-        }, 150);
+
+            if (
+                parsedData.counts &&
+                typeof parsedData.counts ===
+                "object"
+            ) {
+
+                Object.keys(
+                    tasbeehData.counts
+                ).forEach(dhikr => {
+
+                    if (
+                        typeof parsedData.counts[dhikr] ===
+                        "number"
+                    ) {
+
+                        tasbeehData.counts[dhikr] =
+                            Math.max(
+                                0,
+                                parsedData.counts[dhikr]
+                            );
+
+                    }
+
+                });
+
+            }
+
+
+            if (
+                typeof parsedData.total ===
+                "number"
+            ) {
+
+                tasbeehData.total =
+                    Math.max(
+                        0,
+                        parsedData.total
+                    );
+
+            }
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "خطأ في تحميل التسبيح:",
+            error
+        );
 
     }
 
-    catch (error) {
 
-        console.log(
-            "Audio error:",
+    updateUI();
+
+}
+
+
+// ========================================
+// حفظ البيانات
+// ========================================
+
+function saveData() {
+
+    try {
+
+        localStorage.setItem(
+            STORAGE_KEY,
+            JSON.stringify(tasbeehData)
+        );
+
+    } catch (error) {
+
+        console.error(
+            "خطأ في حفظ التسبيح:",
             error
         );
 
@@ -153,381 +204,294 @@ function playTasbeehSound() {
 }
 
 
-/* =========================================
-   تحميل البيانات
-========================================= */
+// ========================================
+// تحديث الواجهة
+// ========================================
 
-function loadTasbeeh() {
+function updateUI() {
 
-    const savedCount =
-        localStorage.getItem(
-            "zakkirni_count"
-        );
+    const dhikr =
+        tasbeehData.currentDhikr;
 
-    const todayCount =
-        localStorage.getItem(
-            "zakkirni_today"
-        );
 
-    const totalCount =
-        localStorage.getItem(
-            "zakkirni_total"
-        );
+    const count =
+        tasbeehData.counts[dhikr] || 0;
 
-    const savedDhikr =
-        localStorage.getItem(
-            "zakkirni_selected_dhikr"
-        );
 
-
-    count =
-        savedCount
-            ? Number(savedCount)
-            : 0;
-
-
-    if (savedDhikr) {
-
-        selectedDhikr =
-            savedDhikr;
-
-    }
-
-
-    updateScreen();
-
-
-    if (todayElement) {
-
-        todayElement.textContent =
-            arabicNumbers(
-                todayCount
-                    ? Number(todayCount)
-                    : 0
-            );
-
-    }
-
-
-    if (totalElement) {
-
-        totalElement.textContent =
-            arabicNumbers(
-                totalCount
-                    ? Number(totalCount)
-                    : 0
-            );
-
-    }
-
-
-    const savedDhikrCount =
-        localStorage.getItem(
-            "zakkirni_saved_count"
-        );
-
-
-    if (savedElement) {
-
-        savedElement.textContent =
-            arabicNumbers(
-                savedDhikrCount
-                    ? Number(savedDhikrCount)
-                    : 0
-            );
-
-    }
-
-}
-
-
-/* =========================================
-   إضافة تسبيحة
-========================================= */
-
-function addTasbeeh() {
-
-    count++;
-
-
-    let today =
-        Number(
-            localStorage.getItem(
-                "zakkirni_today"
-            ) || 0
-        );
-
-
-    let total =
-        Number(
-            localStorage.getItem(
-                "zakkirni_total"
-            ) || 0
-        );
-
-
-    today++;
-
-    total++;
-
-
-    /* حفظ البيانات */
-
-    localStorage.setItem(
-        "zakkirni_count",
-        count
-    );
-
-
-    localStorage.setItem(
-        "zakkirni_today",
-        today
-    );
-
-
-    localStorage.setItem(
-        "zakkirni_total",
-        total
-    );
-
-
-    localStorage.setItem(
-        "zakkirni_selected_dhikr",
-        selectedDhikr
-    );
-
-
-    /* تحديث الشاشة */
-
-    updateScreen();
-
-
-    if (todayElement) {
-
-        todayElement.textContent =
-            arabicNumbers(today);
-
-    }
-
-
-    if (totalElement) {
-
-        totalElement.textContent =
-            arabicNumbers(total);
-
-    }
-
-
-    /* تشغيل الصوت */
-
-    playTasbeehSound();
-
-
-    /* حركة الزر */
-
-    if (tasbeehButton) {
-
-        tasbeehButton.classList.add(
-            "pressed"
-        );
-
-
-        setTimeout(() => {
-
-            tasbeehButton.classList.remove(
-                "pressed"
-            );
-
-        }, 120);
-
-    }
-
-}
-
-
-/* =========================================
-   اختيار الذكر
-========================================= */
-
-function selectDhikr(dhikr) {
-
-    selectedDhikr =
+    currentDhikrElement.textContent =
         dhikr;
 
 
-    count = 0;
+    countElement.textContent =
+        arabicNumbers(count);
 
 
-    localStorage.setItem(
-        "zakkirni_count",
-        0
-    );
+    statDhikrElement.textContent =
+        dhikr;
 
 
-    localStorage.setItem(
-        "zakkirni_selected_dhikr",
-        selectedDhikr
-    );
+    statCountElement.textContent =
+        arabicNumbers(count);
 
 
-    updateScreen();
-
-
-    showMessage(
-        "تم اختيار الذكر"
-    );
-
-}
-
-
-/* =========================================
-   تصفير العداد
-========================================= */
-
-function resetTasbeeh() {
-
-    count = 0;
-
-
-    localStorage.setItem(
-        "zakkirni_count",
-        0
-    );
-
-
-    updateScreen();
-
-
-    showMessage(
-        "تم تصفير العداد"
-    );
-
-}
-
-
-/* =========================================
-   حفظ التسبيح
-========================================= */
-
-function saveTasbeeh() {
-
-    localStorage.setItem(
-        "zakkirni_saved_dhikr",
-        selectedDhikr
-    );
-
-
-    localStorage.setItem(
-        "zakkirni_saved_count",
-        count
-    );
-
-
-    if (savedElement) {
-
-        savedElement.textContent =
-            arabicNumbers(count);
-
-    }
-
-
-    showMessage(
-        `تم حفظ ${arabicNumbers(count)} تسبيحة`
-    );
-
-}
-
-
-/* =========================================
-   تحديث العداد
-========================================= */
-
-function updateScreen() {
-
-    if (countElement) {
-
-        countElement.textContent =
-            arabicNumbers(count);
-
-    }
-
-
-    if (selectedElement) {
-
-        selectedElement.textContent =
-            selectedDhikr;
-
-    }
-
-}
-
-
-/* =========================================
-   رسالة صغيرة
-========================================= */
-
-function showMessage(message) {
-
-    if (!savedMessage) {
-        return;
-    }
-
-
-    savedMessage.textContent =
-        message;
-
-
-    savedMessage.classList.add(
-        "show"
-    );
-
-
-    setTimeout(() => {
-
-        savedMessage.classList.remove(
-            "show"
+    totalCountElement.textContent =
+        arabicNumbers(
+            tasbeehData.total
         );
 
-    }, 2000);
+
+    // تحديد الذكر الحالي
+
+    dhikrOptions.forEach(button => {
+
+        if (
+            button.dataset.dhikr ===
+            dhikr
+        ) {
+
+            button.classList.add(
+                "active"
+            );
+
+        } else {
+
+            button.classList.remove(
+                "active"
+            );
+
+        }
+
+    });
 
 }
 
 
-/* =========================================
-   الضغط على زر التسبيح
-========================================= */
+// ========================================
+// صوت التسبيح
+// ========================================
 
-if (tasbeehButton) {
+let audioContext = null;
 
-    tasbeehButton.addEventListener(
-        "click",
-        addTasbeeh
+
+function playTapSound() {
+
+    try {
+
+        if (!audioContext) {
+
+            audioContext =
+                new (
+                    window.AudioContext ||
+                    window.webkitAudioContext
+                )();
+
+        }
+
+
+        if (
+            audioContext.state ===
+            "suspended"
+        ) {
+
+            audioContext.resume();
+
+        }
+
+
+        const oscillator =
+            audioContext.createOscillator();
+
+        const gain =
+            audioContext.createGain();
+
+
+        oscillator.type =
+            "sine";
+
+
+        oscillator.frequency.setValueAtTime(
+            520,
+            audioContext.currentTime
+        );
+
+
+        oscillator.frequency.exponentialRampToValueAtTime(
+            700,
+            audioContext.currentTime + 0.05
+        );
+
+
+        gain.gain.setValueAtTime(
+            0.0001,
+            audioContext.currentTime
+        );
+
+
+        gain.gain.exponentialRampToValueAtTime(
+            0.12,
+            audioContext.currentTime + 0.01
+        );
+
+
+        gain.gain.exponentialRampToValueAtTime(
+            0.0001,
+            audioContext.currentTime + 0.07
+        );
+
+
+        oscillator.connect(gain);
+
+        gain.connect(
+            audioContext.destination
+        );
+
+
+        oscillator.start();
+
+        oscillator.stop(
+            audioContext.currentTime + 0.08
+        );
+
+    } catch (error) {
+
+        console.log(
+            "الصوت غير متاح:",
+            error
+        );
+
+    }
+
+}
+
+
+// ========================================
+// زيادة التسبيحة
+// ========================================
+
+function increaseCount() {
+
+    const dhikr =
+        tasbeehData.currentDhikr;
+
+
+    if (
+        typeof tasbeehData.counts[dhikr] !==
+        "number"
+    ) {
+
+        tasbeehData.counts[dhikr] =
+            0;
+
+    }
+
+
+    tasbeehData.counts[dhikr]++;
+
+
+    tasbeehData.total++;
+
+
+    saveData();
+
+    updateUI();
+
+    playTapSound();
+
+
+    // حركة بسيطة للزر
+
+    tasbeehButton.classList.remove(
+        "tasbeeh-click"
+    );
+
+
+    void tasbeehButton.offsetWidth;
+
+
+    tasbeehButton.classList.add(
+        "tasbeeh-click"
     );
 
 }
 
 
-/* =========================================
-   زر Space للتسبيح
-========================================= */
+// ========================================
+// اختيار الذكر
+// ========================================
+
+dhikrOptions.forEach(button => {
+
+    button.addEventListener(
+        "click",
+        function () {
+
+            const selectedDhikr =
+                this.dataset.dhikr;
+
+
+            if (!selectedDhikr) {
+                return;
+            }
+
+
+            tasbeehData.currentDhikr =
+                selectedDhikr;
+
+
+            saveData();
+
+            updateUI();
+
+        }
+    );
+
+});
+
+
+// ========================================
+// زر التسبيح
+// ========================================
+
+tasbeehButton.addEventListener(
+    "click",
+    increaseCount
+);
+
+
+// ========================================
+// دعم زر المسافة
+// ========================================
 
 document.addEventListener(
     "keydown",
-    event => {
+    function (event) {
+
+        // منع زيادة العداد
+        // لو المستخدم بيكتب في input
+
+        const tag =
+            document.activeElement?.tagName;
+
 
         if (
-            event.code === "Space" &&
-            document.activeElement.tagName !==
-            "BUTTON" &&
-            document.activeElement.tagName !==
-            "INPUT" &&
-            document.activeElement.tagName !==
-            "TEXTAREA"
+            tag === "INPUT" ||
+            tag === "TEXTAREA" ||
+            tag === "SELECT"
+        ) {
+
+            return;
+
+        }
+
+
+        if (
+            event.code ===
+            "Space"
         ) {
 
             event.preventDefault();
 
-            addTasbeeh();
+            increaseCount();
 
         }
 
@@ -535,15 +499,110 @@ document.addEventListener(
 );
 
 
-/* =========================================
-   تشغيل الموقع
-========================================= */
+// ========================================
+// زر التصفير
+// ========================================
 
-document.addEventListener(
-    "DOMContentLoaded",
-    () => {
+resetButton.addEventListener(
+    "click",
+    function () {
 
-        loadTasbeeh();
+        const dhikr =
+            tasbeehData.currentDhikr;
+
+
+        const confirmed =
+            confirm(
+                `هل تريد تصفير عدد "${dhikr}"؟`
+            );
+
+
+        if (!confirmed) {
+            return;
+        }
+
+
+        tasbeehData.counts[dhikr] =
+            0;
+
+
+        saveData();
+
+        updateUI();
 
     }
 );
+
+
+// ========================================
+// زر الحفظ
+// ========================================
+
+saveButton.addEventListener(
+    "click",
+    function () {
+
+        saveData();
+
+
+        const oldText =
+            saveButton.textContent;
+
+
+        saveButton.textContent =
+            "✅ تم الحفظ";
+
+
+        setTimeout(
+            () => {
+
+                saveButton.textContent =
+                    oldText;
+
+            },
+            1200
+        );
+
+    }
+);
+
+
+// ========================================
+// فتح القائمة في الموبايل
+// ========================================
+
+const menuBtn =
+    document.getElementById(
+        "menuBtn"
+    );
+
+const navLinks =
+    document.getElementById(
+        "navLinks"
+    );
+
+
+if (
+    menuBtn &&
+    navLinks
+) {
+
+    menuBtn.addEventListener(
+        "click",
+        function () {
+
+            navLinks.classList.toggle(
+                "show"
+            );
+
+        }
+    );
+
+}
+
+
+// ========================================
+// تشغيل الموقع
+// ========================================
+
+loadData();
