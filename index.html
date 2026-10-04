@@ -3,67 +3,489 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#071c16">
 
     <title>ذَكِّرني | موقع إسلامي</title>
 
-    <meta name="description"
-          content="ذَكِّرني - القرآن الكريم والأذكار والسنن والتسبيح وقصص الأنبياء">
+    <link rel="stylesheet" href="style.css">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
 
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;500;600;700;800&display=swap"
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Amiri:wght@400;700&display=swap"
           rel="stylesheet">
 
-    <link rel="stylesheet" href="style.css">
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Cairo", sans-serif;
+            background: #061713;
+            color: #fff;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: min(1150px, 92%);
+            margin: auto;
+        }
+
+        /* HEADER */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            background: rgba(6, 23, 19, .92);
+            backdrop-filter: blur(15px);
+
+            border-bottom: 1px solid #21473a;
+        }
+
+        .nav {
+            min-height: 75px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+        }
+
+        .logo {
+            font-family: "Amiri", serif;
+
+            font-size: 32px;
+            font-weight: 700;
+
+            color: #e0bd62;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            padding: 9px 14px;
+
+            border-radius: 10px;
+
+            color: #c8d7d1;
+
+            transition: .2s;
+        }
+
+        .nav-links a:hover {
+            background: #102f26;
+            color: #e0bd62;
+        }
+
+        /* HERO */
+
+        .hero {
+            padding: 80px 0 50px;
+
+            text-align: center;
+
+            background:
+                radial-gradient(
+                    circle at top,
+                    #12382c 0,
+                    #061713 55%
+                );
+        }
+
+        .hero-badge {
+            display: inline-block;
+
+            padding: 7px 15px;
+
+            border: 1px solid #315d4e;
+
+            border-radius: 50px;
+
+            color: #e0bd62;
+
+            background: #0c2820;
+
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            margin: 0;
+
+            font-family: "Amiri", serif;
+
+            font-size: clamp(42px, 7vw, 75px);
+
+            color: #f5d98d;
+        }
+
+        .hero p {
+            max-width: 650px;
+
+            margin: 15px auto 30px;
+
+            line-height: 2;
+
+            color: #b4c8c1;
+
+            font-size: 17px;
+        }
+
+        .hero-buttons {
+            display: flex;
+
+            justify-content: center;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 13px 25px;
+
+            border-radius: 13px;
+
+            font-weight: 800;
+
+            transition: .2s;
+        }
+
+        .btn-primary {
+            background: #e0bd62;
+            color: #061713;
+        }
+
+        .btn-primary:hover {
+            background: #f5d98d;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            border: 1px solid #315d4e;
+            background: #0c2820;
+            color: #fff;
+        }
+
+        .btn-secondary:hover {
+            border-color: #e0bd62;
+            color: #e0bd62;
+        }
+
+        /* SECTION */
+
+        .section {
+            padding: 55px 0;
+        }
+
+        .section-title {
+            text-align: center;
+
+            margin-bottom: 30px;
+        }
+
+        .section-title h2 {
+            margin: 0 0 8px;
+
+            font-family: "Amiri", serif;
+
+            font-size: 35px;
+
+            color: #e0bd62;
+        }
+
+        .section-title p {
+            margin: 0;
+
+            color: #9fb5ad;
+        }
+
+        /* CARDS */
+
+        .cards {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
+
+            gap: 18px;
+        }
+
+        .card {
+            background:
+                linear-gradient(
+                    145deg,
+                    #102f26,
+                    #0a211a
+                );
+
+            border: 1px solid #21473a;
+
+            border-radius: 20px;
+
+            padding: 25px;
+
+            min-height: 190px;
+
+            transition: .25s;
+
+            box-shadow: 0 15px 40px #0003;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+
+            border-color: #e0bd62;
+
+            box-shadow:
+                0 20px 55px #0005;
+        }
+
+        .card-icon {
+            font-size: 35px;
+
+            margin-bottom: 12px;
+        }
+
+        .card h3 {
+            margin: 0 0 8px;
+
+            color: #f5d98d;
+
+            font-size: 20px;
+        }
+
+        .card p {
+            margin: 0 0 18px;
+
+            color: #a7bcb4;
+
+            line-height: 1.8;
+        }
+
+        .card-link {
+            color: #e0bd62;
+
+            font-weight: 700;
+        }
+
+        /* MONTHLY PRAYER SPECIAL CARD */
+
+        .monthly-card {
+            position: relative;
+
+            overflow: hidden;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #153c2f,
+                    #0b211a
+                );
+
+            border: 1px solid #806b38;
+        }
+
+        .monthly-card::before {
+            content: "";
+
+            position: absolute;
+
+            width: 130px;
+            height: 130px;
+
+            border-radius: 50%;
+
+            background: #e0bd62;
+
+            opacity: .06;
+
+            left: -35px;
+            top: -35px;
+        }
+
+        .monthly-card h3 {
+            color: #f5d98d;
+        }
+
+        /* PRAYER */
+
+        .prayer-box {
+            background: #0c2820;
+
+            border: 1px solid #21473a;
+
+            border-radius: 22px;
+
+            padding: 25px;
+        }
+
+        .prayer-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, 1fr);
+
+            gap: 12px;
+        }
+
+        .prayer {
+            text-align: center;
+
+            padding: 18px 10px;
+
+            background: #102f26;
+
+            border-radius: 15px;
+        }
+
+        .prayer span {
+            display: block;
+
+            color: #a7bcb4;
+
+            margin-bottom: 7px;
+        }
+
+        .prayer strong {
+            color: #e0bd62;
+
+            font-size: 18px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            margin-top: 30px;
+
+            padding: 35px 0;
+
+            text-align: center;
+
+            border-top: 1px solid #21473a;
+
+            color: #8fa8a0;
+        }
+
+        footer strong {
+            color: #e0bd62;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            .nav {
+                padding: 12px 0;
+
+                flex-direction: column;
+            }
+
+            .nav-links {
+                justify-content: center;
+            }
+
+            .hero {
+                padding-top: 55px;
+            }
+
+            .prayer-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .prayer:last-child {
+                grid-column: 1 / -1;
+            }
+
+        }
+
+        @media (max-width: 430px) {
+
+            .nav-links a {
+                font-size: 13px;
+
+                padding: 7px 9px;
+            }
+
+            .hero p {
+                font-size: 15px;
+            }
+
+            .prayer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .prayer:last-child {
+                grid-column: auto;
+            }
+
+        }
+
+    </style>
+
 </head>
 
 <body>
 
-<header class="header">
+<!-- HEADER -->
+
+<header>
 
     <div class="container nav">
 
         <a href="index.html" class="logo">
-
-            <span class="logo-mark">☪</span>
-
-            <span>
-                ذَكِّرني
-                <small>لِلذِّكر والقرآن</small>
-            </span>
-
+            ذَكِّرني
         </a>
 
-        <button class="menu-btn" id="menuBtn">
-            ☰
-        </button>
+        <nav class="nav-links">
 
-        <nav class="nav-links" id="navLinks">
-
-            <a href="index.html" class="active">
+            <a href="index.html">
                 الرئيسية
             </a>
 
             <a href="quran.html">
-                📖 القرآن
+                القرآن
             </a>
 
             <a href="adhkar.html">
-                🤲 الأذكار
-            </a>
-
-            <a href="sunnah.html">
-                🕌 السنن
+                الأذكار
             </a>
 
             <a href="tasbeeh.html">
-                📿 التسبيح
+                التسبيح
             </a>
 
             <a href="prophets.html">
-                📚 الأنبياء
+                قصص الأنبياء
             </a>
 
         </nav>
@@ -73,70 +495,42 @@
 </header>
 
 
+<!-- HERO -->
+
 <section class="hero">
-
-    <div class="container hero-content">
-
-        <span class="badge">
-            🌙 أهلاً بك في ذَكِّرني
-        </span>
-
-        <h1>
-            خليك دايمًا
-            <span>فاكر ربنا</span>
-        </h1>
-
-        <p>
-            القرآن الكريم، الأذكار، السنن، التسبيح،
-            قصص الأنبياء ومواقيت الصلاة في مكان واحد.
-        </p>
-
-        <div class="hero-actions">
-
-            <a href="quran.html" class="btn primary">
-                📖 اقرأ القرآن
-            </a>
-
-            <a href="tasbeeh.html" class="btn secondary">
-                📿 ابدأ التسبيح
-            </a>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<section class="section prayer-section">
 
     <div class="container">
 
-        <div class="section-head">
-
-            <div class="section-icon">
-                🕌
-            </div>
-
-            <div>
-
-                <small>
-                    مواعيد اليوم
-                </small>
-
-                <h2>
-                    مواقيت الصلاة
-                </h2>
-
-            </div>
-
+        <div class="hero-badge">
+            🌙 موقعك الإسلامي
         </div>
 
-        <div id="prayerTimes" class="prayer-grid">
+        <h1>
+            ذَكِّرني
+        </h1>
 
-            <div class="loading">
-                ⏳ جاري تحميل المواقيت...
-            </div>
+        <p>
+            خلي الذكر جزء من يومك ❤️
+            <br>
+            القرآن، الأذكار، التسبيح، قصص الأنبياء
+            ومواعيد الصلاة في مكان واحد.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="quran.html"
+               class="btn btn-primary">
+
+                📖 ابدأ قراءة القرآن
+
+            </a>
+
+            <a href="tasbeeh.html"
+               class="btn btn-secondary">
+
+                📿 سبّح الآن
+
+            </a>
 
         </div>
 
@@ -144,32 +538,33 @@
 
 </section>
 
+
+<!-- FEATURES -->
 
 <section class="section">
 
     <div class="container">
 
-        <div class="title-center">
-
-            <span>
-                🌿 اكتشف ذَكِّرني
-            </span>
+        <div class="section-title">
 
             <h2>
                 كل اللي تحتاجه في مكان واحد
             </h2>
 
             <p>
-                اختار القسم اللي تحب تبدأ منه
+                اختار الخدمة اللي عايزها
             </p>
 
         </div>
 
 
-        <div class="cards-grid">
+        <div class="cards">
 
 
-            <a class="feature-card" href="quran.html">
+            <!-- QURAN -->
+
+            <a href="quran.html"
+               class="card">
 
                 <div class="card-icon">
                     📖
@@ -180,18 +575,21 @@
                 </h3>
 
                 <p>
-                    اقرأ السور والآيات بواجهة
-                    مريحة وقريبة من صفحات المصحف.
+                    اقرأ القرآن الكريم
+                    بسهولة من أي مكان.
                 </p>
 
-                <b>
-                    ابدأ القراءة ←
-                </b>
+                <span class="card-link">
+                    فتح القرآن ←
+                </span>
 
             </a>
 
 
-            <a class="feature-card" href="adhkar.html">
+            <!-- ADHKAR -->
+
+            <a href="adhkar.html"
+               class="card">
 
                 <div class="card-icon">
                     🤲
@@ -202,40 +600,21 @@
                 </h3>
 
                 <p>
-                    أذكار الصباح والمساء والنوم
-                    وبعد الصلاة.
+                    أذكار الصباح والمساء
+                    وأذكار النوم وبعد الصلاة.
                 </p>
 
-                <b>
-                    افتح الأذكار ←
-                </b>
+                <span class="card-link">
+                    فتح الأذكار ←
+                </span>
 
             </a>
 
 
-            <a class="feature-card" href="sunnah.html">
+            <!-- TASBEEH -->
 
-                <div class="card-icon">
-                    🕌
-                </div>
-
-                <h3>
-                    السنن
-                </h3>
-
-                <p>
-                    سنن وآداب يومية في بطاقات
-                    سهلة ومنظمة.
-                </p>
-
-                <b>
-                    افتح السنن ←
-                </b>
-
-            </a>
-
-
-            <a class="feature-card" href="tasbeeh.html">
+            <a href="tasbeeh.html"
+               class="card">
 
                 <div class="card-icon">
                     📿
@@ -246,21 +625,24 @@
                 </h3>
 
                 <p>
-                    عداد تسبيح مع حفظ العدد
-                    على جهازك.
+                    سبّح واحفظ عدد التسبيحات
+                    بتلقائية.
                 </p>
 
-                <b>
+                <span class="card-link">
                     ابدأ التسبيح ←
-                </b>
+                </span>
 
             </a>
 
 
-            <a class="feature-card" href="prophets.html">
+            <!-- PROPHETS -->
+
+            <a href="prophets.html"
+               class="card">
 
                 <div class="card-icon">
-                    📚
+                    🕌
                 </div>
 
                 <h3>
@@ -268,15 +650,42 @@
                 </h3>
 
                 <p>
-                    قصص ومعلومات عن الأنبياء
-                    مما ورد في القرآن.
+                    تعرف على قصص الأنبياء
+                    المذكورة في القرآن.
                 </p>
 
-                <b>
-                    اقرأ القصص ←
-                </b>
+                <span class="card-link">
+                    قراءة القصص ←
+                </span>
 
             </a>
+
+
+            <!-- MONTHLY PRAYER -->
+
+            <a href="monthly-prayer.html"
+               class="card monthly-card">
+
+                <div class="card-icon">
+                    🕰️
+                </div>
+
+                <h3>
+                    جدول الصلاة الشهري
+                </h3>
+
+                <p>
+                    اعرف مواعيد الفجر والشروق
+                    والظهر والعصر والمغرب والعشاء
+                    لكل أيام الشهر.
+                </p>
+
+                <span class="card-link">
+                    فتح جدول الصلاة ←
+                </span>
+
+            </a>
+
 
         </div>
 
@@ -284,24 +693,95 @@
 
 </section>
 
+
+<!-- PRAYER -->
 
 <section class="section">
 
     <div class="container">
 
-        <div class="verse-box">
+        <div class="section-title">
 
-            <div class="bismillah">
-                ﷽
-            </div>
+            <h2>
+                🕌 مواقيت الصلاة
+            </h2>
 
             <p>
-                أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ
+                مواعيد اليوم — القاهرة
             </p>
 
-            <small>
-                سورة الرعد — ٢٨
-            </small>
+        </div>
+
+
+        <div class="prayer-box">
+
+            <div class="prayer-grid">
+
+                <div class="prayer">
+
+                    <span>
+                        الفجر
+                    </span>
+
+                    <strong id="fajr">
+                        --:--
+                    </strong>
+
+                </div>
+
+
+                <div class="prayer">
+
+                    <span>
+                        الظهر
+                    </span>
+
+                    <strong id="dhuhr">
+                        --:--
+                    </strong>
+
+                </div>
+
+
+                <div class="prayer">
+
+                    <span>
+                        العصر
+                    </span>
+
+                    <strong id="asr">
+                        --:--
+                    </strong>
+
+                </div>
+
+
+                <div class="prayer">
+
+                    <span>
+                        المغرب
+                    </span>
+
+                    <strong id="maghrib">
+                        --:--
+                    </strong>
+
+                </div>
+
+
+                <div class="prayer">
+
+                    <span>
+                        العشاء
+                    </span>
+
+                    <strong id="isha">
+                        --:--
+                    </strong>
+
+                </div>
+
+            </div>
 
         </div>
 
@@ -310,73 +790,144 @@
 </section>
 
 
-<footer class="footer">
+<!-- MONTHLY CTA -->
 
-    <div class="container footer-grid">
+<section class="section">
 
-        <div>
+    <div class="container">
 
-            <div class="footer-logo">
-                ☪ ذَكِّرني
+        <div class="card monthly-card"
+             style="text-align:center;">
+
+            <div class="card-icon">
+                📅
             </div>
 
+            <h3>
+                جدول الصلاة لكل الشهر
+            </h3>
+
             <p>
-                موقع إسلامي للقرآن والذكر والتذكير.
+                عايز تعرف مواعيد الصلاة
+                لكل يوم في الشهر؟
+                افتح الجدول الشهري.
             </p>
 
-        </div>
+            <a href="monthly-prayer.html"
+               class="btn btn-primary">
 
+                🕌 عرض جدول الصلاة الشهري
 
-        <div>
-
-            <h3>
-                الأقسام
-            </h3>
-
-            <a href="quran.html">
-                القرآن
-            </a>
-
-            <a href="adhkar.html">
-                الأذكار
-            </a>
-
-            <a href="sunnah.html">
-                السنن
-            </a>
-
-        </div>
-
-
-        <div>
-
-            <h3>
-                المزيد
-            </h3>
-
-            <a href="tasbeeh.html">
-                التسبيح
-            </a>
-
-            <a href="prophets.html">
-                قصص الأنبياء
             </a>
 
         </div>
 
     </div>
 
+</section>
 
-    <div class="footer-bottom">
 
-        © 2026 ذَكِّرني
+<!-- FOOTER -->
+
+<footer>
+
+    <div class="container">
+
+        <strong>
+            ذَكِّرني
+        </strong>
+
+        <br>
+
+        موقع إسلامي لمساعدتك
+        على تذكّر الخير يوميًا ❤️
 
     </div>
 
 </footer>
 
 
-<script src="app.js"></script>
+<script>
+
+    /*
+        مواقيت الصلاة - القاهرة
+    */
+
+    async function loadPrayerTimes() {
+
+        try {
+
+            const now = new Date();
+
+            const day = now.getDate();
+            const month = now.getMonth() + 1;
+            const year = now.getFullYear();
+
+            const url =
+                `https://api.aladhan.com/v1/timingsByCity/${day}-${month}-${year}?city=Cairo&country=Egypt&method=5`;
+
+            const response =
+                await fetch(url);
+
+            if (!response.ok) {
+                throw new Error("Prayer API Error");
+            }
+
+            const result =
+                await response.json();
+
+            if (!result.data) {
+                throw new Error("Invalid data");
+            }
+
+            const timings =
+                result.data.timings;
+
+
+            document.getElementById("fajr").textContent =
+                cleanTime(timings.Fajr);
+
+            document.getElementById("dhuhr").textContent =
+                cleanTime(timings.Dhuhr);
+
+            document.getElementById("asr").textContent =
+                cleanTime(timings.Asr);
+
+            document.getElementById("maghrib").textContent =
+                cleanTime(timings.Maghrib);
+
+            document.getElementById("isha").textContent =
+                cleanTime(timings.Isha);
+
+        }
+
+        catch (error) {
+
+            console.log(
+                "Prayer times error:",
+                error
+            );
+
+        }
+
+    }
+
+
+    function cleanTime(time) {
+
+        if (!time) {
+            return "--:--";
+        }
+
+        return time.split(" ")[0];
+
+    }
+
+
+    loadPrayerTimes();
+
+</script>
 
 </body>
+
 </html>
