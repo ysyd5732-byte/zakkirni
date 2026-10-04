@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>جدول الصلاة الشهري | ذَكِّرني</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Cairo", sans-serif;
+            background: #061713;
+            color: #fff;
+        }
+
+        .monthly-page {
+            width: min(1200px, 94%);
+            margin: 40px auto;
+        }
+
+        .monthly-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .monthly-header h1 {
+            color: #e0bd62;
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .monthly-header p {
+            color: #a7bcb4;
+            margin: 0;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .controls select,
+        .controls button {
+            font-family: "Cairo", sans-serif;
+            border: 1px solid #21473a;
+            border-radius: 12px;
+            padding: 11px 18px;
+            background: #0c2820;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .controls button:hover,
+        .controls select:hover {
+            border-color: #e0bd62;
+        }
+
+        .controls .current-month {
+            min-width: 170px;
+            text-align: center;
+            font-weight: 700;
+            color: #e0bd62;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            background: #0c2820;
+            border: 1px solid #21473a;
+            border-radius: 18px;
+            box-shadow: 0 20px 60px #0006;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px;
+        }
+
+        th {
+            background: #102f26;
+            color: #e0bd62;
+            padding: 15px 10px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 13px 10px;
+            text-align: center;
+            border-top: 1px solid #21473a;
+            color: #f7f7f1;
+        }
+
+        tbody tr:hover {
+            background: #102f26;
+        }
+
+        .day {
+            color: #e0bd62;
+            font-weight: 800;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 35px;
+            color: #a7bcb4;
+        }
+
+        .error {
+            text-align: center;
+            padding: 30px;
+            color: #ffb4b4;
+        }
+
+        .print-btn {
+            display: block;
+            margin: 20px auto 0;
+            border: 0;
+            background: #e0bd62;
+            color: #061713;
+            font-family: "Cairo", sans-serif;
+            font-weight: 800;
+            padding: 12px 25px;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .print-btn:hover {
+            background: #f5d98d;
+        }
+
+        @media (max-width: 600px) {
+            .monthly-header h1 {
+                font-size: 25px;
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .controls select,
+            .controls button {
+                width: 100%;
+            }
+        }
+
+        @media print {
+            body {
+                background: white;
+                color: black;
+            }
+
+            .controls,
+            .print-btn {
+                display: none;
+            }
+
+            .monthly-page {
+                width: 100%;
+                margin: 0;
+            }
+
+            .monthly-header h1 {
+                color: black;
+            }
+
+            .monthly-header p {
+                color: black;
+            }
+
+            .table-wrapper {
+                box-shadow: none;
+                border: 1px solid #999;
+            }
+
+            th {
+                background: #eee;
+                color: black;
+            }
+
+            td {
+                color: black;
+                border-color: #ccc;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="monthly-page">
+
+    <header class="monthly-header">
+        <h1>🕌 جدول الصلاة الشهري</h1>
+        <p>مواعيد الصلوات اليومية لشهر <span id="cityName">القاهرة</span></p>
+    </header>
+
+    <div class="controls">
+
+        <button id="prevMonth">
+            ← الشهر السابق
+        </button>
+
+        <div class="current-month" id="monthTitle">
+            جاري التحميل...
+        </div>
+
+        <button id="nextMonth">
+            الشهر التالي →
+        </button>
+
+        <select id="yearSelect"></select>
+
+    </div>
+
+    <div class="table-wrapper">
+
+        <div id="loading" class="loading">
+            جاري تحميل مواعيد الصلاة...
+        </div>
+
+        <table id="prayerTable" style="display:none;">
+
+            <thead>
+                <tr>
+                    <th>اليوم</th>
+                    <th>التاريخ</th>
+                    <th>الفجر</th>
+                    <th>الشروق</th>
+                    <th>الظهر</th>
+                    <th>العصر</th>
+                    <th>المغرب</th>
+                    <th>العشاء</th>
+                </tr>
+            </thead>
+
+            <tbody id="prayerBody"></tbody>
+
+        </table>
+
+        <div id="error" class="error" style="display:none;"></div>
+
+    </div>
+
+    <button class="print-btn" onclick="window.print()">
+        🖨️ طباعة جدول الشهر
+    </button>
+
+</div>
+
+<script>
+
+    const city = "Cairo";
+    const country = "Egypt";
+
+    const arabicMonths = [
+        "يناير",
+        "فبراير",
+        "مارس",
+        "أبريل",
+        "مايو",
+        "يونيو",
+        "يوليو",
+        "أغسطس",
+        "سبتمبر",
+        "أكتوبر",
+        "نوفمبر",
+        "ديسمبر"
+    ];
+
+    const arabicDays = [
+        "الأحد",
+        "الاثنين",
+        "الثلاثاء",
+        "الأربعاء",
+        "الخميس",
+        "الجمعة",
+        "السبت"
+    ];
+
+    let currentDate = new Date();
+
+    const monthTitle = document.getElementById("monthTitle");
+    const prayerBody = document.getElementById("prayerBody");
+    const loading = document.getElementById("loading");
+    const errorBox = document.getElementById("error");
+    const prayerTable = document.getElementById("prayerTable");
+
+    const yearSelect = document.getElementById("yearSelect");
+
+    // إنشاء السنوات
+    const currentYear = new Date().getFullYear();
+
+    for (let year = currentYear - 5; year <= currentYear + 5; year++) {
+
+        const option = document.createElement("option");
+
+        option.value = year;
+        option.textContent = year;
+
+        yearSelect.appendChild(option);
+    }
+
+    yearSelect.value = currentYear;
+
+    function loadPrayerTimes() {
+
+        const month = currentDate.getMonth() + 1;
+        const year = currentDate.getFullYear();
+
+        yearSelect.value = year;
+
+        monthTitle.textContent =
+            `${arabicMonths[month - 1]} ${year}`;
+
+        loading.style.display = "block";
+        prayerTable.style.display = "none";
+        errorBox.style.display = "none";
+
+        const url =
+            `https://api.aladhan.com/v1/calendarByCity/${year}/${month}?city=${city}&country=${country}&method=5`;
+
+        fetch(url)
+
+            .then(response => {
+
+                if (!response.ok) {
+                    throw new Error("API Error");
+                }
+
+                return response.json();
+
+            })
+
+            .then(data => {
+
+                if (
+                    !data ||
+                    !data.data ||
+                    !Array.isArray(data.data)
+                ) {
+                    throw new Error("بيانات غير صحيحة");
+                }
+
+                prayerBody.innerHTML = "";
+
+                data.data.forEach(day => {
+
+                    const date = new Date(
+                        year,
+                        month - 1,
+                        Number(day.date.gregorian.day)
+                    );
+
+                    const row = document.createElement("tr");
+
+                    row.innerHTML = `
+
+                        <td class="day">
+                            ${arabicDays[date.getDay()]}
+                        </td>
+
+                        <td>
+                            ${day.date.gregorian.day}
+                            /
+                            ${month}
+                        </td>
+
+                        <td>
+                            ${cleanTime(day.timings.Fajr)}
+                        </td>
+
+                        <td>
+                            ${cleanTime(day.timings.Sunrise)}
+                        </td>
+
+                        <td>
+                            ${cleanTime(day.timings.Dhuhr)}
+                        </td>
+
+                        <td>
+                            ${cleanTime(day.timings.Asr)}
+                        </td>
+
+                        <td>
+                            ${cleanTime(day.timings.Maghrib)}
+                        </td>
+
+                        <td>
+                            ${cleanTime(day.timings.Isha)}
+                        </td>
+
+                    `;
+
+                    prayerBody.appendChild(row);
+
+                });
+
+                loading.style.display = "none";
+                prayerTable.style.display = "table";
+
+            })
+
+            .catch(err => {
+
+                console.error(err);
+
+                loading.style.display = "none";
+                prayerTable.style.display = "none";
+
+                errorBox.style.display = "block";
+
+                errorBox.textContent =
+                    "حصلت مشكلة في تحميل مواعيد الصلاة. تأكد من اتصال الإنترنت وحاول مرة تانية.";
+
+            });
+    }
+
+
+    function cleanTime(time) {
+
+        if (!time) return "--:--";
+
+        return time.split(" ")[0];
+
+    }
+
+
+    document.getElementById("prevMonth").addEventListener("click", () => {
+
+        currentDate.setMonth(currentDate.getMonth() - 1);
+
+        loadPrayerTimes();
+
+    });
+
+
+    document.getElementById("nextMonth").addEventListener("click", () => {
+
+        currentDate.setMonth(currentDate.getMonth() + 1);
+
+        loadPrayerTimes();
+
+    });
+
+
+    yearSelect.addEventListener("change", () => {
+
+        currentDate.setFullYear(
+            Number(yearSelect.value)
+        );
+
+        loadPrayerTimes();
+
+    });
+
+
+    loadPrayerTimes();
+
+</script>
+
+</body>
+</html>
