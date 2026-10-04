@@ -3,22 +3,15 @@
 
 <head>
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <meta name="theme-color" content="#071c16">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#061713">
 
     <title>ذَكِّرني | موقع إسلامي</title>
 
     <link rel="stylesheet" href="style.css">
 
-    <link rel="preconnect"
-          href="https://fonts.googleapis.com">
-
-    <link rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Amiri:wght@400;700&display=swap"
           rel="stylesheet">
@@ -46,14 +39,14 @@
             margin: auto;
         }
 
-        /* HEADER */
+        /* ================= HEADER ================= */
 
         header {
             position: sticky;
             top: 0;
             z-index: 1000;
 
-            background: rgba(6, 23, 19, .92);
+            background: rgba(6, 23, 19, .94);
             backdrop-filter: blur(15px);
 
             border-bottom: 1px solid #21473a;
@@ -71,24 +64,20 @@
 
         .logo {
             font-family: "Amiri", serif;
-
             font-size: 32px;
             font-weight: 700;
-
             color: #e0bd62;
         }
 
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 10px;
-
+            gap: 8px;
             flex-wrap: wrap;
         }
 
         .nav-links a {
-            padding: 9px 14px;
-
+            padding: 9px 13px;
             border-radius: 10px;
 
             color: #c8d7d1;
@@ -101,10 +90,10 @@
             color: #e0bd62;
         }
 
-        /* HERO */
+        /* ================= HERO ================= */
 
         .hero {
-            padding: 80px 0 50px;
+            padding: 80px 0 55px;
 
             text-align: center;
 
@@ -112,21 +101,19 @@
                 radial-gradient(
                     circle at top,
                     #12382c 0,
-                    #061713 55%
+                    #061713 58%
                 );
         }
 
         .hero-badge {
             display: inline-block;
 
-            padding: 7px 15px;
+            padding: 7px 16px;
 
             border: 1px solid #315d4e;
-
             border-radius: 50px;
 
             color: #e0bd62;
-
             background: #0c2820;
 
             margin-bottom: 20px;
@@ -137,7 +124,7 @@
 
             font-family: "Amiri", serif;
 
-            font-size: clamp(42px, 7vw, 75px);
+            font-size: clamp(45px, 8vw, 78px);
 
             color: #f5d98d;
         }
@@ -156,11 +143,9 @@
 
         .hero-buttons {
             display: flex;
-
             justify-content: center;
 
             gap: 12px;
-
             flex-wrap: wrap;
         }
 
@@ -200,7 +185,7 @@
             color: #e0bd62;
         }
 
-        /* SECTION */
+        /* ================= SECTIONS ================= */
 
         .section {
             padding: 55px 0;
@@ -208,7 +193,6 @@
 
         .section-title {
             text-align: center;
-
             margin-bottom: 30px;
         }
 
@@ -224,11 +208,10 @@
 
         .section-title p {
             margin: 0;
-
             color: #9fb5ad;
         }
 
-        /* CARDS */
+        /* ================= CARDS ================= */
 
         .cards {
             display: grid;
@@ -265,13 +248,11 @@
 
             border-color: #e0bd62;
 
-            box-shadow:
-                0 20px 55px #0005;
+            box-shadow: 0 20px 55px #0005;
         }
 
         .card-icon {
             font-size: 35px;
-
             margin-bottom: 12px;
         }
 
@@ -293,15 +274,13 @@
 
         .card-link {
             color: #e0bd62;
-
             font-weight: 700;
         }
 
-        /* MONTHLY PRAYER SPECIAL CARD */
+        /* ================= MONTHLY PRAYER ================= */
 
         .monthly-card {
             position: relative;
-
             overflow: hidden;
 
             background:
@@ -319,8 +298,8 @@
 
             position: absolute;
 
-            width: 130px;
-            height: 130px;
+            width: 140px;
+            height: 140px;
 
             border-radius: 50%;
 
@@ -332,11 +311,7 @@
             top: -35px;
         }
 
-        .monthly-card h3 {
-            color: #f5d98d;
-        }
-
-        /* PRAYER */
+        /* ================= PRAYER ================= */
 
         .prayer-box {
             background: #0c2820;
@@ -381,7 +356,7 @@
             font-size: 18px;
         }
 
-        /* FOOTER */
+        /* ================= FOOTER ================= */
 
         footer {
             margin-top: 30px;
@@ -399,13 +374,12 @@
             color: #e0bd62;
         }
 
-        /* MOBILE */
+        /* ================= MOBILE ================= */
 
         @media (max-width: 700px) {
 
             .nav {
                 padding: 12px 0;
-
                 flex-direction: column;
             }
 
@@ -418,8 +392,7 @@
             }
 
             .prayer-grid {
-                grid-template-columns:
-                    repeat(2, 1fr);
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .prayer:last-child {
@@ -432,7 +405,6 @@
 
             .nav-links a {
                 font-size: 13px;
-
                 padding: 7px 9px;
             }
 
@@ -456,7 +428,7 @@
 
 <body>
 
-<!-- HEADER -->
+<!-- ================= HEADER ================= -->
 
 <header>
 
@@ -488,6 +460,10 @@
                 قصص الأنبياء
             </a>
 
+            <a href="monthly-prayer.html">
+                الصلاة
+            </a>
+
         </nav>
 
     </div>
@@ -495,7 +471,7 @@
 </header>
 
 
-<!-- HERO -->
+<!-- ================= HERO ================= -->
 
 <section class="hero">
 
@@ -539,7 +515,7 @@
 </section>
 
 
-<!-- FEATURES -->
+<!-- ================= SERVICES ================= -->
 
 <section class="section">
 
@@ -561,7 +537,7 @@
         <div class="cards">
 
 
-            <!-- QURAN -->
+            <!-- القرآن -->
 
             <a href="quran.html"
                class="card">
@@ -586,7 +562,7 @@
             </a>
 
 
-            <!-- ADHKAR -->
+            <!-- الأذكار -->
 
             <a href="adhkar.html"
                class="card">
@@ -611,7 +587,7 @@
             </a>
 
 
-            <!-- TASBEEH -->
+            <!-- التسبيح -->
 
             <a href="tasbeeh.html"
                class="card">
@@ -626,7 +602,7 @@
 
                 <p>
                     سبّح واحفظ عدد التسبيحات
-                    بتلقائية.
+                    تلقائيًا.
                 </p>
 
                 <span class="card-link">
@@ -636,7 +612,7 @@
             </a>
 
 
-            <!-- PROPHETS -->
+            <!-- قصص الأنبياء -->
 
             <a href="prophets.html"
                class="card">
@@ -661,7 +637,7 @@
             </a>
 
 
-            <!-- MONTHLY PRAYER -->
+            <!-- جدول الصلاة -->
 
             <a href="monthly-prayer.html"
                class="card monthly-card">
@@ -694,7 +670,7 @@
 </section>
 
 
-<!-- PRAYER -->
+<!-- ================= TODAY PRAYER ================= -->
 
 <section class="section">
 
@@ -703,11 +679,11 @@
         <div class="section-title">
 
             <h2>
-                🕌 مواقيت الصلاة
+                🕌 مواقيت الصلاة اليوم
             </h2>
 
             <p>
-                مواعيد اليوم — القاهرة
+                القاهرة — بتوقيت مصر
             </p>
 
         </div>
@@ -717,6 +693,7 @@
 
             <div class="prayer-grid">
 
+
                 <div class="prayer">
 
                     <span>
@@ -724,7 +701,7 @@
                     </span>
 
                     <strong id="fajr">
-                        --:--
+                        جاري التحميل...
                     </strong>
 
                 </div>
@@ -737,7 +714,7 @@
                     </span>
 
                     <strong id="dhuhr">
-                        --:--
+                        جاري التحميل...
                     </strong>
 
                 </div>
@@ -750,7 +727,7 @@
                     </span>
 
                     <strong id="asr">
-                        --:--
+                        جاري التحميل...
                     </strong>
 
                 </div>
@@ -763,7 +740,7 @@
                     </span>
 
                     <strong id="maghrib">
-                        --:--
+                        جاري التحميل...
                     </strong>
 
                 </div>
@@ -776,10 +753,11 @@
                     </span>
 
                     <strong id="isha">
-                        --:--
+                        جاري التحميل...
                     </strong>
 
                 </div>
+
 
             </div>
 
@@ -790,7 +768,7 @@
 </section>
 
 
-<!-- MONTHLY CTA -->
+<!-- ================= MONTHLY CTA ================= -->
 
 <section class="section">
 
@@ -808,9 +786,8 @@
             </h3>
 
             <p>
-                عايز تعرف مواعيد الصلاة
-                لكل يوم في الشهر؟
-                افتح الجدول الشهري.
+                شوف مواعيد الصلاة لكل يوم
+                في الشهر بالتوقيت المصري.
             </p>
 
             <a href="monthly-prayer.html"
@@ -827,7 +804,7 @@
 </section>
 
 
-<!-- FOOTER -->
+<!-- ================= FOOTER ================= -->
 
 <footer>
 
@@ -849,9 +826,9 @@
 
 <script>
 
-    /*
-        مواقيت الصلاة - القاهرة
-    */
+    /* =========================================
+       مواقيت الصلاة - القاهرة - مصر
+       ========================================= */
 
     async function loadPrayerTimes() {
 
@@ -866,60 +843,91 @@
             const url =
                 `https://api.aladhan.com/v1/timingsByCity/${day}-${month}-${year}?city=Cairo&country=Egypt&method=5`;
 
-            const response =
-                await fetch(url);
+            const response = await fetch(url);
 
             if (!response.ok) {
                 throw new Error("Prayer API Error");
             }
 
-            const result =
-                await response.json();
+            const result = await response.json();
 
-            if (!result.data) {
-                throw new Error("Invalid data");
+            if (!result.data || !result.data.timings) {
+                throw new Error("Invalid prayer data");
             }
 
-            const timings =
-                result.data.timings;
+            const timings = result.data.timings;
 
 
             document.getElementById("fajr").textContent =
-                cleanTime(timings.Fajr);
+                toEgyptianTime(timings.Fajr);
 
             document.getElementById("dhuhr").textContent =
-                cleanTime(timings.Dhuhr);
+                toEgyptianTime(timings.Dhuhr);
 
             document.getElementById("asr").textContent =
-                cleanTime(timings.Asr);
+                toEgyptianTime(timings.Asr);
 
             document.getElementById("maghrib").textContent =
-                cleanTime(timings.Maghrib);
+                toEgyptianTime(timings.Maghrib);
 
             document.getElementById("isha").textContent =
-                cleanTime(timings.Isha);
+                toEgyptianTime(timings.Isha);
 
         }
 
         catch (error) {
 
-            console.log(
+            console.error(
                 "Prayer times error:",
                 error
             );
+
+            document.getElementById("fajr").textContent = "--:--";
+            document.getElementById("dhuhr").textContent = "--:--";
+            document.getElementById("asr").textContent = "--:--";
+            document.getElementById("maghrib").textContent = "--:--";
+            document.getElementById("isha").textContent = "--:--";
 
         }
 
     }
 
 
-    function cleanTime(time) {
+    /* =========================================
+       تحويل 24 ساعة إلى التوقيت المصري
+       مثال:
+       05:10 → 5:10 ص
+       15:30 → 3:30 م
+       ========================================= */
+
+    function toEgyptianTime(time) {
 
         if (!time) {
             return "--:--";
         }
 
-        return time.split(" ")[0];
+        time = time
+            .toString()
+            .split(" ")[0];
+
+        let parts = time.split(":");
+
+        let hour = Number(parts[0]);
+        let minute = Number(parts[1]);
+
+        if (isNaN(hour) || isNaN(minute)) {
+            return "--:--";
+        }
+
+        const period = hour >= 12 ? "م" : "ص";
+
+        hour = hour % 12;
+
+        if (hour === 0) {
+            hour = 12;
+        }
+
+        return `${hour}:${String(minute).padStart(2, "0")} ${period}`;
 
     }
 
