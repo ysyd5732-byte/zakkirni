@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color"
+          content="#061713">
+
+    <title>
+        جدول الصلاة الشهري | ذَكِّرني
+    </title>
+
+    <link rel="stylesheet"
+          href="style.css">
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Amiri:wght@400;700&display=swap"
+          rel="stylesheet">
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+
+            margin: 0;
+
+            font-family: "Cairo", sans-serif;
+
+            background: #061713;
+
+            color: white;
+
+        }
+
+
+        .page {
+
+            width: min(1200px, 94%);
+
+            margin: 40px auto 60px;
+
+        }
+
+
+        /* HEADER */
+
+        .top {
+
+            text-align: center;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .top a {
+
+            display: inline-block;
+
+            margin-bottom: 20px;
+
+            color: #e0bd62;
+
+            text-decoration: none;
+
+            font-weight: 700;
+
+        }
+
+
+        .top h1 {
+
+            margin: 0 0 8px;
+
+            font-family: "Amiri", serif;
+
+            color: #f5d98d;
+
+            font-size: 40px;
+
+        }
+
+
+        .top p {
+
+            margin: 0;
+
+            color: #a7bcb4;
+
+        }
+
+
+        /* CONTROLS */
+
+        .controls {
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .controls button,
+        .controls select {
+
+            font-family: "Cairo", sans-serif;
+
+            border: 1px solid #315d4e;
+
+            border-radius: 12px;
+
+            padding: 11px 17px;
+
+            background: #0c2820;
+
+            color: white;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+        }
+
+
+        .controls button:hover,
+        .controls select:hover {
+
+            border-color: #e0bd62;
+
+        }
+
+
+        .month-title {
+
+            min-width: 180px;
+
+            text-align: center;
+
+            color: #e0bd62;
+
+            font-weight: 800;
+
+        }
+
+
+        /* TABLE */
+
+        .table-wrapper {
+
+            overflow-x: auto;
+
+            background: #0c2820;
+
+            border: 1px solid #21473a;
+
+            border-radius: 20px;
+
+            box-shadow: 0 20px 60px #0006;
+
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 850px;
+
+        }
+
+
+        th {
+
+            padding: 15px 10px;
+
+            background: #102f26;
+
+            color: #e0bd62;
+
+            font-weight: 800;
+
+            white-space: nowrap;
+
+        }
+
+
+        td {
+
+            padding: 13px 10px;
+
+            text-align: center;
+
+            border-top: 1px solid #21473a;
+
+            color: #f7f7f1;
+
+            white-space: nowrap;
+
+        }
+
+
+        tbody tr:hover {
+
+            background: #102f26;
+
+        }
+
+
+        .day {
+
+            color: #e0bd62;
+
+            font-weight: 800;
+
+        }
+
+
+        .today {
+
+            background: rgba(224, 189, 98, .10);
+
+        }
+
+
+        .today td {
+
+            color: #f5d98d;
+
+            font-weight: 700;
+
+        }
+
+
+        .loading {
+
+            text-align: center;
+
+            padding: 40px;
+
+            color: #a7bcb4;
+
+        }
+
+
+        .error {
+
+            text-align: center;
+
+            padding: 35px;
+
+            color: #ffb4b4;
+
+        }
+
+
+        /* PRINT */
+
+        .print-btn {
+
+            display: block;
+
+            margin: 20px auto 0;
+
+            border: 0;
+
+            background: #e0bd62;
+
+            color: #061713;
+
+            font-family: "Cairo", sans-serif;
+
+            font-weight: 800;
+
+            padding: 12px 25px;
+
+            border-radius: 12px;
+
+            cursor: pointer;
+
+        }
+
+
+        .print-btn:hover {
+
+            background: #f5d98d;
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .top h1 {
+
+                font-size: 30px;
+
+            }
+
+
+            .controls {
+
+                flex-direction: column;
+
+            }
+
+
+            .controls button,
+            .controls select {
+
+                width: 100%;
+
+            }
+
+
+            .month-title {
+
+                order: -1;
+
+            }
+
+        }
+
+
+        @media print {
+
+            body {
+
+                background: white;
+
+                color: black;
+
+            }
+
+
+            .top a,
+            .controls,
+            .print-btn {
+
+                display: none;
+
+            }
+
+
+            .page {
+
+                width: 100%;
+
+                margin: 0;
+
+            }
+
+
+            .top h1 {
+
+                color: black;
+
+            }
+
+
+            .top p {
+
+                color: black;
+
+            }
+
+
+            .table-wrapper {
+
+                box-shadow: none;
+
+                border: 1px solid #999;
+
+            }
+
+
+            th {
+
+                background: #eee;
+
+                color: black;
+
+            }
+
+
+            td {
+
+                color: black;
+
+                border-color: #ccc;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+
+    <!-- HEADER -->
+
+    <div class="top">
+
+        <a href="index.html">
+            ← الرجوع للرئيسية
+        </a>
+
+        <h1>
+            🕌 جدول الصلاة الشهري
+        </h1>
+
+        <p>
+            القاهرة — مواقيت الصلاة بالتوقيت المصري
+        </p>
+
+    </div>
+
+
+    <!-- CONTROLS -->
+
+    <div class="controls">
+
+        <button id="prevMonth">
+            ← الشهر السابق
+        </button>
+
+
+        <div class="month-title"
+             id="monthTitle">
+
+            جاري التحميل...
+
+        </div>
+
+
+        <button id="nextMonth">
+            الشهر التالي →
+        </button>
+
+
+        <select id="yearSelect">
+        </select>
+
+    </div>
+
+
+    <!-- TABLE -->
+
+    <div class="table-wrapper">
+
+        <div id="loading"
+             class="loading">
+
+            🕌 جاري تحميل مواعيد الصلاة...
+
+        </div>
+
+
+        <table id="prayerTable"
+               style="display:none;">
+
+            <thead>
+
+                <tr>
+
+                    <th>
+                        اليوم
+                    </th>
+
+                    <th>
+                        التاريخ
+                    </th>
+
+                    <th>
+                        الفجر
+                    </th>
+
+                    <th>
+                        الشروق
+                    </th>
+
+                    <th>
+                        الظهر
+                    </th>
+
+                    <th>
+                        العصر
+                    </th>
+
+                    <th>
+                        المغرب
+                    </th>
+
+                    <th>
+                        العشاء
+                    </th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody id="prayerBody">
+
+            </tbody>
+
+        </table>
+
+
+        <div id="error"
+             class="error"
+             style="display:none;">
+
+        </div>
+
+    </div>
+
+
+    <!-- PRINT -->
+
+    <button class="print-btn"
+            onclick="window.print()">
+
+        🖨️ طباعة جدول الشهر
+
+    </button>
+
+
+</div>
+
+
+<script>
+
+
+    /* =========================
+       إعدادات المدينة
+       ========================= */
+
+    const city = "Cairo";
+
+    const country = "Egypt";
+
+
+    /* =========================
+       أسماء الشهور
+       ========================= */
+
+    const arabicMonths = [
+
+        "يناير",
+        "فبراير",
+        "مارس",
+        "أبريل",
+        "مايو",
+        "يونيو",
+        "يوليو",
+        "أغسطس",
+        "سبتمبر",
+        "أكتوبر",
+        "نوفمبر",
+        "ديسمبر"
+
+    ];
+
+
+    /* =========================
+       أيام الأسبوع
+       ========================= */
+
+    const arabicDays = [
+
+        "الأحد",
+        "الاثنين",
+        "الثلاثاء",
+        "الأربعاء",
+        "الخميس",
+        "الجمعة",
+        "السبت"
+
+    ];
+
+
+    /* =========================
+       التاريخ الحالي
+       ========================= */
+
+    let currentDate = new Date();
+
+
+    const monthTitle =
+        document.getElementById("monthTitle");
+
+
+    const prayerBody =
+        document.getElementById("prayerBody");
+
+
+    const loading =
+        document.getElementById("loading");
+
+
+    const errorBox =
+        document.getElementById("error");
+
+
+    const prayerTable =
+        document.getElementById("prayerTable");
+
+
+    const yearSelect =
+        document.getElementById("yearSelect");
+
+
+    /* =========================
+       السنوات
+       ========================= */
+
+    const currentYear =
+        new Date().getFullYear();
+
+
+    for (
+        let year = currentYear - 5;
+        year <= currentYear + 5;
+        year++
+    ) {
+
+        const option =
+            document.createElement("option");
+
+        option.value = year;
+
+        option.textContent = year;
+
+        yearSelect.appendChild(option);
+
+    }
+
+
+    yearSelect.value = currentYear;
+
+
+    /* =========================
+       تحميل الشهر
+       ========================= */
+
+    function loadPrayerTimes() {
+
+        const month =
+            currentDate.getMonth() + 1;
+
+        const year =
+            currentDate.getFullYear();
+
+
+        yearSelect.value = year;
+
+
+        monthTitle.textContent =
+            `${arabicMonths[month - 1]} ${year}`;
+
+
+        loading.style.display = "block";
+
+        prayerTable.style.display = "none";
+
+        errorBox.style.display = "none";
+
+
+        const url =
+            `https://api.aladhan.com/v1/calendarByCity/${year}/${month}?city=${city}&country=${country}&method=5`;
+
+
+        fetch(url)
+
+            .then(response => {
+
+                if (!response.ok) {
+
+                    throw new Error(
+                        "API Error"
+                    );
+
+                }
+
+                return response.json();
+
+            })
+
+
+            .then(data => {
+
+                if (
+                    !data ||
+                    !data.data ||
+                    !Array.isArray(data.data)
+                ) {
+
+                    throw new Error(
+                        "Invalid data"
+                    );
+
+                }
+
+
+                prayerBody.innerHTML = "";
+
+
+                const today =
+                    new Date();
+
+
+                data.data.forEach(day => {
+
+
+                    const dayNumber =
+                        Number(
+                            day.date.gregorian.day
+                        );
+
+
+                    const rowDate =
+                        new Date(
+                            year,
+                            month - 1,
+                            dayNumber
+                        );
+
+
+                    const isToday =
+                        today.getFullYear() === year &&
+                        today.getMonth() === month - 1 &&
+                        today.getDate() === dayNumber;
+
+
+                    const row =
+                        document.createElement("tr");
+
+
+                    if (isToday) {
+
+                        row.classList.add(
+                            "today"
+                        );
+
+                    }
+
+
+                    row.innerHTML = `
+
+                        <td class="day">
+                            ${arabicDays[rowDate.getDay()]}
+                        </td>
+
+                        <td>
+                            ${dayNumber}/${month}
+                        </td>
+
+                        <td>
+                            ${toEgyptianTime(day.timings.Fajr)}
+                        </td>
+
+                        <td>
+                            ${toEgyptianTime(day.timings.Sunrise)}
+                        </td>
+
+                        <td>
+                            ${toEgyptianTime(day.timings.Dhuhr)}
+                        </td>
+
+                        <td>
+                            ${toEgyptianTime(day.timings.Asr)}
+                        </td>
+
+                        <td>
+                            ${toEgyptianTime(day.timings.Maghrib)}
+                        </td>
+
+                        <td>
+                            ${toEgyptianTime(day.timings.Isha)}
+                        </td>
+
+                    `;
+
+
+                    prayerBody.appendChild(row);
+
+                });
+
+
+                loading.style.display = "none";
+
+                prayerTable.style.display = "table";
+
+            })
+
+
+            .catch(error => {
+
+                console.error(error);
+
+
+                loading.style.display = "none";
+
+                prayerTable.style.display = "none";
+
+                errorBox.style.display = "block";
+
+
+                errorBox.textContent =
+                    "حصلت مشكلة في تحميل المواعيد. تأكد من اتصال الإنترنت وحاول مرة تانية.";
+
+            });
+
+    }
+
+
+    /* =========================
+       تحويل الوقت المصري
+       ========================= */
+
+    function toEgyptianTime(time) {
+
+        if (!time) {
+
+            return "--:--";
+
+        }
+
+
+        time =
+            time
+                .toString()
+                .split(" ")[0];
+
+
+        let parts =
+            time.split(":");
+
+
+        let hour =
+            Number(parts[0]);
+
+
+        let minute =
+            Number(parts[1]);
+
+
+        if (
+            isNaN(hour) ||
+            isNaN(minute)
+        ) {
+
+            return "--:--";
+
+        }
+
+
+        const period =
+            hour >= 12 ? "م" : "ص";
+
+
+        hour =
+            hour % 12;
+
+
+        if (hour === 0) {
+
+            hour = 12;
+
+        }
+
+
+        return `${hour}:${String(minute).padStart(2, "0")} ${period}`;
+
+    }
+
+
+    /* =========================
+       الشهر السابق
+       ========================= */
+
+    document
+        .getElementById("prevMonth")
+        .addEventListener("click", () => {
+
+            currentDate.setMonth(
+                currentDate.getMonth() - 1
+            );
+
+            loadPrayerTimes();
+
+        });
+
+
+    /* =========================
+       الشهر التالي
+       ========================= */
+
+    document
+        .getElementById("nextMonth")
+        .addEventListener("click", () => {
+
+            currentDate.setMonth(
+                currentDate.getMonth() + 1
+            );
+
+            loadPrayerTimes();
+
+        });
+
+
+    /* =========================
+       تغيير السنة
+       ========================= */
+
+    yearSelect.addEventListener(
+        "change",
+        () => {
+
+            currentDate.setFullYear(
+                Number(yearSelect.value)
+            );
+
+            loadPrayerTimes();
+
+        }
+    );
+
+
+    /* =========================
+       تشغيل الصفحة
+       ========================= */
+
+    loadPrayerTimes();
+
+</script>
+
+
+</body>
+
+</html>
